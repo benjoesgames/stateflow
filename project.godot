@@ -24,6 +24,41 @@ window/stretch/aspect="expand"
 
 enabled=PackedStringArray("res://addons/stateflow/plugin.cfg")
 
+[input]
+
+up={
+"deadzone": 0.2,
+"events": []
+}
+down={
+"deadzone": 0.2,
+"events": []
+}
+left={
+"deadzone": 0.2,
+"events": []
+}
+right={
+"deadzone": 0.2,
+"events": []
+}
+fire={
+"deadzone": 0.2,
+"events": []
+}
+jump={
+"deadzone": 0.2,
+"events": []
+}
+dash={
+"deadzone": 0.2,
+"events": []
+}
+crouch={
+"deadzone": 0.2,
+"events": []
+}
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

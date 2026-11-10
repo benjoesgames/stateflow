@@ -3,7 +3,26 @@
 [ext_resource type="Script" uid="uid://dde3r5mxxwxux" path="res://addons/stateflow/scripts/nodes/state_machines/simple_statemachine.gd" id="1_6uqi0"]
 [ext_resource type="Script" uid="uid://us06lsmn14rq" path="res://addons/stateflow/scripts/nodes/states/simple_state.gd" id="2_ppyta"]
 [ext_resource type="Script" uid="uid://dw4nmroalpbfr" path="res://addons/stateflow/scripts/nodes/triggers/timed_trigger.gd" id="3_ykrsh"]
-[ext_resource type="Script" uid="uid://qb1gjs7wwpk2" path="res://addons/stateflow/scripts/nodes/events/callmethod_event.gd" id="4_ppyta"]
+[ext_resource type="Script" uid="uid://csf3lx11frhwc" path="res://addons/stateflow/scripts/nodes/triggers/inputvector_trigger.gd" id="5_vbegm"]
+[ext_resource type="Script" uid="uid://c4mgry1mn85nr" path="res://addons/stateflow/scripts/nodes/events/changeproperty_event.gd" id="6_ehkex"]
+[ext_resource type="Script" uid="uid://dj21lvibohg2b" path="res://addons/stateflow/scripts/nodes/states/animation_state.gd" id="6_vbegm"]
+[ext_resource type="Script" uid="uid://cw2vhfuesqjux" path="res://addons/stateflow/scripts/nodes/triggers/input_trigger.gd" id="6_xersf"]
+
+[sub_resource type="Animation" id="Animation_ehkex"]
+resource_name = "attack"
+
+[sub_resource type="Animation" id="Animation_xersf"]
+resource_name = "idle"
+
+[sub_resource type="Animation" id="Animation_00tp4"]
+resource_name = "walk"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_77dp3"]
+_data = {
+&"attack": SubResource("Animation_ehkex"),
+&"idle": SubResource("Animation_xersf"),
+&"walk": SubResource("Animation_00tp4")
+}
 
 [node name="Node" type="Node" unique_id=1529797591]
 
@@ -20,20 +39,28 @@ metadata/_custom_type_script = "uid://us06lsmn14rq"
 
 [node name="TimedTrigger" type="Node" parent="SimpleStateMachine/SimpleState" unique_id=2000813985 node_paths=PackedStringArray("events")]
 script = ExtResource("3_ykrsh")
-events = [NodePath("../../SimpleState2/TimedTrigger2/CallMethodEvent")]
+time = 5.0
+events = [NodePath("ChangePropertyEvent")]
 reset_on_enter = true
 
-[node name="SimpleState2" type="Node" parent="SimpleStateMachine" unique_id=1652243709 node_paths=PackedStringArray("triggers")]
-script = ExtResource("2_ppyta")
-triggers = [NodePath("TimedTrigger2")]
-metadata/_custom_type_script = "uid://us06lsmn14rq"
+[node name="ChangePropertyEvent" type="Node" parent="SimpleStateMachine/SimpleState/TimedTrigger" unique_id=424260994]
+script = ExtResource("6_ehkex")
+metadata/_custom_type_script = "uid://c4mgry1mn85nr"
 
-[node name="TimedTrigger2" type="Node" parent="SimpleStateMachine/SimpleState2" unique_id=1552646595 node_paths=PackedStringArray("events")]
-script = ExtResource("3_ykrsh")
-events = [NodePath("../../SimpleState")]
-reset_on_enter = true
+[node name="InputVectorTrigger" type="Node" parent="SimpleStateMachine/SimpleState/TimedTrigger" unique_id=1857773772]
+script = ExtResource("5_vbegm")
 
-[node name="CallMethodEvent" type="Node" parent="SimpleStateMachine/SimpleState2/TimedTrigger2" unique_id=506579308 node_paths=PackedStringArray("node")]
-script = ExtResource("4_ppyta")
-node = NodePath(".")
-metadata/_custom_type_script = "uid://qb1gjs7wwpk2"
+[node name="InputTrigger" type="Node" parent="SimpleStateMachine/SimpleState" unique_id=1705838211]
+script = ExtResource("6_xersf")
+trigger_on_down = null
+trigger_on_up = null
+metadata/_custom_type_script = "uid://cw2vhfuesqjux"
+
+[node name="AnimationState" type="Node" parent="SimpleStateMachine" unique_id=1901026559 node_paths=PackedStringArray("animator")]
+script = ExtResource("6_vbegm")
+animator = NodePath("AnimationPlayer")
+animation_name = "walk"
+metadata/_custom_type_script = "uid://dj21lvibohg2b"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SimpleStateMachine/AnimationState" unique_id=573486742]
+libraries/ = SubResource("AnimationLibrary_77dp3")
